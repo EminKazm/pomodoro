@@ -1,6 +1,7 @@
 package com.syntax.timer
 
 import android.Manifest
+import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -101,6 +102,28 @@ class TimerViewModel @Inject constructor(
             notify(NOTIFICATION_ID, notificationBuilder.build())
         }
     }
+    private fun scheduleAlarm(triggerAtMillis: Long, timerType: TimerType) {
+        val alarmManager = appContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(appContext, TimerExpiredReceiver::class.java).apply {
+            action = "com.syntax.timer.ACTION_TIMER_EXPIRED"
+            putExtra("TIMER_TYPE", timerType.name)
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            appContext,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            triggerAtMillis,
+            pendingIntent
+        )
+    }
+
     private fun getDurationMillis(timerType: TimerType): Long {
         val durationMinutes = when (timerType) {
             TimerType.Pomodoro -> preferencesManager.pomodoroDuration
@@ -110,32 +133,78 @@ class TimerViewModel @Inject constructor(
         return durationMinutes * 60 * 1000
     }
 
-    fun startTimer() {
-        if (_timerData.value.timerState == TimerState.Running) return
+//    fun startTimer() {
+//        if (_timerData.value.timerState == TimerState.Running) return
+//
+//        _timerData.update { it.copy(timerState = TimerState.Running) }
+//
+//        val startTime = System.currentTimeMillis()
+//        val initialRemainingTime = _timerData.value.remainingTimeMillis
+//
+//        timerJob = viewModelScope.launch {
+//            while (_timerData.value.remainingTimeMillis > 0 && isActive) {
+//                delay(1000L)
+//                val elapsedTime = System.currentTimeMillis() - startTime
+//                val newRemainingTime = initialRemainingTime - elapsedTime
+//                _timerData.update { it.copy(remainingTimeMillis = newRemainingTime.coerceAtLeast(0L)) }
+//            }
+//
+//            if (_timerData.value.remainingTimeMillis <= 0) {
+//                onTimerFinished()
+//            }
+//        }
+//    }
+fun startTimer() {
+    if (_timerData.value.timerState == TimerState.Running) return
 
-        _timerData.update { it.copy(timerState = TimerState.Running) }
+    _timerData.update { it.copy(timerState = TimerState.Running) }
 
-        val startTime = System.currentTimeMillis()
-        val initialRemainingTime = _timerData.value.remainingTimeMillis
+    val startTime = System.currentTimeMillis()
+    val initialRemainingTime = _timerData.value.remainingTimeMillis
 
-        timerJob = viewModelScope.launch {
-            while (_timerData.value.remainingTimeMillis > 0 && isActive) {
-                delay(1000L)
-                val elapsedTime = System.currentTimeMillis() - startTime
-                val newRemainingTime = initialRemainingTime - elapsedTime
-                _timerData.update { it.copy(remainingTimeMillis = newRemainingTime.coerceAtLeast(0L)) }
-            }
+    // Calculate when the timer should finish
+    val triggerAtMillis = startTime + initialRemainingTime
 
-            if (_timerData.value.remainingTimeMillis <= 0) {
-                onTimerFinished()
-            }
+    // Schedule the alarm
+    scheduleAlarm(triggerAtMillis, _timerData.value.timerType)
+
+    // Start the timer countdown (if needed for UI updates)
+    timerJob = viewModelScope.launch {
+        while (_timerData.value.remainingTimeMillis > 0 && isActive) {
+            delay(1000L)
+            val elapsedTime = System.currentTimeMillis() - startTime
+            val newRemainingTime = initialRemainingTime - elapsedTime
+            _timerData.update { it.copy(remainingTimeMillis = newRemainingTime.coerceAtLeast(0L)) }
         }
+
+        if (_timerData.value.remainingTimeMillis <= 0) {
+            onTimerFinished()
+        }
+    }
+}
+    private fun cancelAlarm() {
+        val alarmManager = appContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(appContext, TimerExpiredReceiver::class.java).apply {
+            action = "com.syntax.timer.ACTION_TIMER_EXPIRED"
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            appContext,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        alarmManager.cancel(pendingIntent)
     }
 
     fun pauseTimer() {
         if (_timerData.value.timerState != TimerState.Running) return
 
         timerJob?.cancel()
+        cancelAlarm()
+
         _timerData.update { it.copy(timerState = TimerState.Paused) }
         saveSession() // Save the session when paused
     }
@@ -158,6 +227,8 @@ class TimerViewModel @Inject constructor(
     fun setTimerType(timerType: TimerType) {
         if (_timerData.value.timerState == TimerState.Running) {
             timerJob?.cancel()
+            cancelAlarm()
+
             saveSession() // Save the session before changing the timer type
         }
         val durationMillis = getDurationMillis(timerType)
@@ -184,7 +255,7 @@ class TimerViewModel @Inject constructor(
     private fun onTimerFinished() {
         _timerData.update { it.copy(timerState = TimerState.Stopped) }
         saveSession()
-        showNotification()
+//        showNotification()
 
     }
 

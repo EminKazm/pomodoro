@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import com.syntax.core.CHANNEL_ID
 import com.syntax.core.CHANNEL_NAME
@@ -23,6 +24,9 @@ class MyApplication: Application(){
                 val importance = NotificationManager.IMPORTANCE_HIGH
                 val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
                     description = descriptionText
+                    enableLights(true)
+                    lightColor = Color.RED
+                    enableVibration(true)
                 }
                 // Register the channel with the system
                 val notificationManager: NotificationManager =
