@@ -169,7 +169,6 @@ class StatsFragment : Fragment() {
         binding.lineChart.clear()
         binding.barChart.clear()
         binding.pieChart.clear()
-        Toast.makeText(requireContext(), "No data available", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

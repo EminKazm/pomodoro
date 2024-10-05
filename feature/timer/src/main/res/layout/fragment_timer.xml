@@ -62,4 +62,10 @@
         android:padding="12dp"
         android:background="@drawable/button_background" />
 
+    <ImageView
+        android:id="@+id/imgTomato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/tomato_unripe" />
+
 </LinearLayout>

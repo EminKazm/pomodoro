@@ -1,5 +1,6 @@
 package com.syntax.timer
 
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ class TimerFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: TimerViewModel by viewModels()
+    private var animatedVectorDrawable: AnimatedVectorDrawable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +30,8 @@ class TimerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        binding.imgTomato.setImageResource(R.drawable.tomato_ripening_animation)
+        animatedVectorDrawable = binding.imgTomato.drawable as? AnimatedVectorDrawable
         // Set up the TabLayout
         setupTabLayout()
 
@@ -41,9 +44,24 @@ class TimerFragment : Fragment() {
 
                 // Update the button text
                 when (timerData.timerState) {
-                    TimerState.Stopped -> binding.buttonStartPause.text = "Start"
-                    TimerState.Running -> binding.buttonStartPause.text = "Pause"
-                    TimerState.Paused -> binding.buttonStartPause.text = "Resume"
+                    TimerState.Stopped -> {
+                        // Update button text to "Start"
+                        binding.buttonStartPause.text = "Start"
+                        // Stop animation
+                        animatedVectorDrawable?.stop()
+                    }
+                    TimerState.Running -> {
+                        // Update button text to "Pause"
+                        binding.buttonStartPause.text = "Pause"
+                        // Start animation
+                        animatedVectorDrawable?.start()
+                    }
+                    TimerState.Paused -> {
+                        // Update button text to "Resume"
+                        binding.buttonStartPause.text = "Resume"
+                        // Stop animation
+                        animatedVectorDrawable?.stop()
+                    }
                 }
 
                 // Update the selected tab if necessary

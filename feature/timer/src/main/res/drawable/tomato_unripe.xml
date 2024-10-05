@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/tomato_unripe.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Tomato Body -->
+    <path
+        android:name="tomatoBody"
+        android:fillColor="#00FF00"
+        android:pathData="M100,10
+        C40,10 10,50 10,100
+        C10,150 40,190 100,190
+        C160,190 190,150 190,100
+        C190,50 160,10 100,10Z" />
+
+    <!-- Tomato Stem -->
+    <path
+        android:name="tomatoStem"
+        android:fillColor="#8B4513"
+        android:pathData="M100,10
+        L100,0
+        L105,0
+        L105,10Z" />
+</vector>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/tomato_ripening_animation.xml -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/tomato_unripe">
+
+    <target
+        android:name="tomatoBody"
+        android:animation="@animator/tomato_color_change" />
+</animated-vector>
