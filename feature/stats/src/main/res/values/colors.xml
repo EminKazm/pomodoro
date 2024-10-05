@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="light_background">#F9F9F9</color>
+
+    <!-- Header Text color (e.g., for section titles) -->
+    <color name="header_text">#FFFFFF</color>
+
+    <!-- Card Header Text color (for chart titles) -->
+    <color name="card_header_text">#444444</color>
+
+    <!-- Primary App Color (if needed for buttons or highlights) -->
+    <color name="primary_color">#6200EE</color>
+
+    <!-- Accent Color (for small details or highlights) -->
+    <color name="accent_color">#03DAC5</color>
+
+    <!-- Text color for buttons or other general elements -->
+    <color name="white">#FFFFFF</color>
+</resources>

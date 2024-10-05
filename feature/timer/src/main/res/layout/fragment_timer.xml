@@ -11,10 +11,16 @@
         android:id="@+id/tabLayoutTimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabIndicatorHeight="4dp"
-        app:tabSelectedTextColor="@color/colorAccent"
-        app:tabTextColor="@color/colorPrimaryDark" />
+        app:background="@color/colorPrimary"
+        app:tabIndicatorColor="@android:color/transparent"
+        app:tabIndicatorHeight="0dp"
+        app:tabSelectedTextColor="@color/colorWhite"
+        app:tabTextColor="@color/colorPrimaryRed"
+        app:tabPaddingStart="0dp"
+        app:tabPaddingEnd="0dp"
+        app:tabMinWidth="0dp"
+        app:tabBackground="@drawable/custom_tab_background"
+        app:tabRippleColor="@color/colorAccent"/>
 
     <!-- ViewPager2 to enable swiping between tabs (optional) -->
     <!-- If the content is the same and only the timer duration changes, you might not need ViewPager2 -->
@@ -36,9 +42,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
-        android:background="#009688"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#FF6347"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:background="@drawable/button_background" />
 
     <!-- Reset Button -->
     <androidx.appcompat.widget.AppCompatButton
@@ -46,8 +55,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Reset"
-        android:background="@color/colorPrimary"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#009688"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:padding="12dp"
+        android:background="@drawable/button_background" />
 
 </LinearLayout>

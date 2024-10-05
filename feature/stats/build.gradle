@@ -33,6 +33,7 @@ android {
         viewBinding true
     }
 
+
 }
 
 dependencies {
@@ -44,7 +45,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.49"
     implementation libs.androidx.recyclerview
     kapt "com.google.dagger:hilt-compiler:2.49"
-
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
     implementation libs.material

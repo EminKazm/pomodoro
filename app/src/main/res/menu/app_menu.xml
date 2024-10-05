@@ -3,7 +3,8 @@
     <item
         android:id="@+id/timer_navigation_graph"
         android:title="@string/timer_title"
-        android:icon="@drawable/ic_timer"/>
+        android:icon="@drawable/ic_timer"
+        />
     <item
         android:id="@+id/stats_navigation_graph"
         android:title="@string/stats_title"

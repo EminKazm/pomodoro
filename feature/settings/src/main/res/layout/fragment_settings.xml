@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#CC1717"
     android:padding="16dp">
 
     <!-- Pomodoro Duration -->
@@ -19,6 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Pomodoro Duration: 25 minutes"
+        android:textColor="#FFFFFF"
+
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Short Break Duration: 5 minutes"
+        android:textColor="#FFFFFF"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +73,8 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="192dp"
         android:text="Long Break Duration: 15 minutes"
+        android:textColor="#FFFFFF"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +96,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,6 +112,7 @@
         android:text="Work Interval"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"

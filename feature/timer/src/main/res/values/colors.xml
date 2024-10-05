@@ -2,7 +2,9 @@
 <resources>
     <!-- colors.xml -->
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryRed">#C51212</color>
+    <color name="colorAccent">#C51212</color>
+    <color name="colorWhite">#FFFFFF</color>
+
 
 </resources>

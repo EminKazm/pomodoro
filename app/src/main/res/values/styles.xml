@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TransparentToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="background">@android:color/transparent</item>
+        <item name="titleTextColor">@android:color/white</item> <!-- Adjust text color as needed -->
+        <item name="subtitleTextColor">@android:color/white</item> <!-- Adjust subtitle color as needed -->
+    </style>
+</resources>
