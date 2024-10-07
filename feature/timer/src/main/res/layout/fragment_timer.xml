@@ -1,15 +1,14 @@
 <!-- fragment_timer.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#C51212">
 
     <!-- TabLayout for Pomodoro, Short Break, Long Break -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutTimer"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:background="@color/colorPrimary"
         app:tabIndicatorColor="@android:color/transparent"
@@ -20,11 +19,10 @@
         app:tabPaddingEnd="0dp"
         app:tabMinWidth="0dp"
         app:tabBackground="@drawable/custom_tab_background"
-        app:tabRippleColor="@color/colorAccent"/>
-
-    <!-- ViewPager2 to enable swiping between tabs (optional) -->
-    <!-- If the content is the same and only the timer duration changes, you might not need ViewPager2 -->
-    <!-- You can handle tab selection without ViewPager2 -->
+        app:tabRippleColor="@color/colorAccent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Timer Text -->
     <TextView
@@ -33,7 +31,11 @@
         android:layout_height="wrap_content"
         android:text="25:00"
         android:textSize="48sp"
-        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutTimer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp" />
 
     <!-- Start/Pause Button -->
@@ -44,10 +46,12 @@
         android:text="Start"
         android:textColor="#FFFFFF"
         android:backgroundTint="#FF6347"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
         android:padding="12dp"
-        android:background="@drawable/button_background" />
+        android:background="@drawable/button_background"
+        app:layout_constraintTop_toBottomOf="@id/textViewTimer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Reset Button -->
     <androidx.appcompat.widget.AppCompatButton
@@ -57,15 +61,37 @@
         android:text="Reset"
         android:textColor="#FFFFFF"
         android:backgroundTint="#009688"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:padding="12dp"
-        android:background="@drawable/button_background" />
+        android:background="@drawable/button_background"
+        app:layout_constraintTop_toBottomOf="@id/buttonStartPause"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Tomato Image -->
     <ImageView
         android:id="@+id/imgTomato"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/tomato_unripe" />
+        app:srcCompat="@drawable/tomato_unripe"
+        app:layout_constraintTop_toBottomOf="@id/buttonReset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
 
-</LinearLayout>
+    <!-- Motivation Text -->
+    <TextView
+        android:id="@+id/textViewMotivation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintTop_toBottomOf="@id/imgTomato"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

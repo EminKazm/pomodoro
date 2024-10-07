@@ -1,12 +1,14 @@
 package com.syntax.timer
 
-import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
+import com.syntax.core.utils.AnimationUtils
+import com.syntax.core.utils.ColorUtils
 import com.syntax.timer.databinding.FragmentTimerBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -19,8 +21,8 @@ class TimerFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: TimerViewModel by viewModels()
-    private var animatedVectorDrawable: AnimatedVectorDrawable? = null
-
+    private val startColor = Color.parseColor("#00FF00") // Green
+    private val endColor = Color.parseColor("#FF0000") // Red
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -30,11 +32,12 @@ class TimerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.imgTomato.setImageResource(R.drawable.tomato_ripening_animation)
-        animatedVectorDrawable = binding.imgTomato.drawable as? AnimatedVectorDrawable
+
         // Set up the TabLayout
         setupTabLayout()
+        binding.imgTomato.setImageResource(R.drawable.tomato_unripe)
 
+        // Observe timer data
         // Observe timer data
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.timerData.collectLatest { timerData ->
@@ -42,25 +45,39 @@ class TimerFragment : Fragment() {
                 val remainingTimeMillis = timerData.remainingTimeMillis
                 binding.textViewTimer.text = formatTime(remainingTimeMillis)
 
-                // Update the button text
+                // Calculate the fraction of time elapsed
+                val fraction = calculateFraction(timerData)
+                showMotivationalMessage(fraction)
+
+                // Interpolate color based on fraction
+                val interpolatedColor = ColorUtils.interpolateColor(startColor, endColor, fraction)
+                binding.imgTomato.setColorFilter(interpolatedColor)
+// Conditionally show/hide and update motivational messages
+                if (timerData.timerType == TimerType.Pomodoro) {
+                    // Show motivational message
+                    binding.textViewMotivation.visibility = View.VISIBLE
+                    showMotivationalMessage(fraction)
+                } else {
+                    // Hide motivational message
+                    binding.textViewMotivation.visibility = View.GONE
+                }
+                // Optionally, apply pulsing animation when running
                 when (timerData.timerState) {
-                    TimerState.Stopped -> {
-                        // Update button text to "Start"
-                        binding.buttonStartPause.text = "Start"
-                        // Stop animation
-                        animatedVectorDrawable?.stop()
-                    }
                     TimerState.Running -> {
-                        // Update button text to "Pause"
                         binding.buttonStartPause.text = "Pause"
-                        // Start animation
-                        animatedVectorDrawable?.start()
+                        // Apply pulsing animation
+                        AnimationUtils.applyPulsingAnimation(binding.imgTomato)
+                    }
+                    TimerState.Stopped -> {
+                        binding.buttonStartPause.text = "Start"
+                        // Stop animation and reset color
+                        AnimationUtils.stopAnimation(binding.imgTomato)
+                        binding.imgTomato.setColorFilter(startColor)
                     }
                     TimerState.Paused -> {
-                        // Update button text to "Resume"
                         binding.buttonStartPause.text = "Resume"
                         // Stop animation
-                        animatedVectorDrawable?.stop()
+                        AnimationUtils.stopAnimation(binding.imgTomato)
                     }
                 }
 
@@ -128,9 +145,41 @@ class TimerFragment : Fragment() {
         val seconds = (millis / 1000) % 60
         return String.format("%02d:%02d", minutes, seconds)
     }
+
+    private fun calculateFraction(timerData: TimerData): Float {
+        val elapsedTime = timerData.totalDurationMillis - timerData.remainingTimeMillis
+        return if (timerData.totalDurationMillis > 0) {
+            (elapsedTime.toFloat() / timerData.totalDurationMillis).coerceIn(0f, 1f)
+        } else {
+            0f
+        }
+    }
+    private fun showMotivationalMessage(fraction: Float) {
+        val message = when {
+            fraction < 0.25 -> "Great start! Keep focusing."
+            fraction in 0.25..0.5 -> "Halfway there! Stay strong."
+            fraction in 0.5..0.75 -> "Almost done! Don't give up."
+            else -> "Final stretch! Finish strong."
+        }
+        binding.textViewMotivation.text = message
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Stop any ongoing animations when the fragment is paused
+        AnimationUtils.stopAnimation(binding.imgTomato)
+    }
     override fun onResume() {
         super.onResume()
-        viewModel.refreshDurations()
+//        viewModel.refreshDurations()
+        when (viewModel.timerData.value.timerState) {
+            TimerState.Running -> {
+                AnimationUtils.applyPulsingAnimation(binding.imgTomato)
+            }
+            else -> {
+                AnimationUtils.stopAnimation(binding.imgTomato)
+            }
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()

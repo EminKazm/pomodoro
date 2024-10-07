@@ -2,5 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Primary colors for the app -->
+    <color name="colorPrimary">#C51212</color>  <!-- Rich red for Pomodoro emphasis -->
+    <color name="colorPrimaryDark">#9B0F0F</color> <!-- Darker red for contrast -->
+    <color name="colorAccent">#FF6347</color>  <!-- Tomato-like color for important highlights -->
 
+    <!-- Text colors -->
+    <color name="colorTextPrimary">#FFFFFF</color> <!-- White for main text on red background -->
+    <color name="colorTextSecondary">#CCCCCC</color> <!-- Light gray for secondary text -->
+
+    <!-- Icon tints and background -->
+    <color name="colorIconActive">#FF6347</color> <!-- Active icons colored like tomato -->
+    <color name="colorIconInactive">#BDBDBD</color> <!-- Inactive icons light gray -->
+
+    <!-- Backgrounds -->
+    <color name="colorBackground">#F5F5F5</color> <!-- Light gray for a clean background -->
+    <color name="colorButtonBackground">#C51212</color> <!-- Red for buttons to stay consistent -->
 </resources>
