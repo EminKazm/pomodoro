@@ -20,7 +20,6 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SettingsViewModel by viewModels()
-    // Minimum values for SeekBars if needed
     private val minPomodoro = 1
     private val minShortBreak = 1
     private val minLongBreak = 1
@@ -47,7 +46,6 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupSeekBars() {
-        // Observe ViewModel data and set initial values
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.pomodoroDuration.collectLatest { duration ->
                 binding.seekBarPomodoro.progress = (duration - minPomodoro).toInt()

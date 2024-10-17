@@ -90,13 +90,7 @@ class TimerViewModel @Inject constructor(
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
+
                 return
             }
             notify(NOTIFICATION_ID, notificationBuilder.build())
@@ -162,13 +156,10 @@ fun startTimer() {
     val startTime = System.currentTimeMillis()
     val initialRemainingTime = _timerData.value.remainingTimeMillis
 
-    // Calculate when the timer should finish
     val triggerAtMillis = startTime + initialRemainingTime
 
-    // Schedule the alarm
     scheduleAlarm(triggerAtMillis, _timerData.value.timerType)
 
-    // Start the timer countdown (if needed for UI updates)
     timerJob = viewModelScope.launch {
         while (_timerData.value.remainingTimeMillis > 0 && isActive) {
             delay(1000L)

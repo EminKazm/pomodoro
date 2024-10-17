@@ -33,60 +33,46 @@ class TimerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        // Set up the TabLayout
         setupTabLayout()
         binding.imgTomato.setImageResource(R.drawable.tomato_unripe)
 
-        // Observe timer data
-        // Observe timer data
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.timerData.collectLatest { timerData ->
-                // Update the timer text
                 val remainingTimeMillis = timerData.remainingTimeMillis
                 binding.textViewTimer.text = formatTime(remainingTimeMillis)
 
-                // Calculate the fraction of time elapsed
                 val fraction = calculateFraction(timerData)
                 showMotivationalMessage(fraction)
 
-                // Interpolate color based on fraction
                 val interpolatedColor = ColorUtils.interpolateColor(startColor, endColor, fraction)
                 binding.imgTomato.setColorFilter(interpolatedColor)
-// Conditionally show/hide and update motivational messages
                 if (timerData.timerType == TimerType.Pomodoro) {
-                    // Show motivational message
                     binding.textViewMotivation.visibility = View.VISIBLE
                     showMotivationalMessage(fraction)
                 } else {
-                    // Hide motivational message
                     binding.textViewMotivation.visibility = View.GONE
                 }
-                // Optionally, apply pulsing animation when running
                 when (timerData.timerState) {
                     TimerState.Running -> {
                         binding.buttonStartPause.text = "Pause"
-                        // Apply pulsing animation
                         AnimationUtils.applyPulsingAnimation(binding.imgTomato)
                     }
                     TimerState.Stopped -> {
                         binding.buttonStartPause.text = "Start"
-                        // Stop animation and reset color
                         AnimationUtils.stopAnimation(binding.imgTomato)
                         binding.imgTomato.setColorFilter(startColor)
                     }
                     TimerState.Paused -> {
                         binding.buttonStartPause.text = "Resume"
-                        // Stop animation
                         AnimationUtils.stopAnimation(binding.imgTomato)
                     }
                 }
 
-                // Update the selected tab if necessary
                 updateSelectedTab(timerData.timerType)
             }
         }
 
-        // Set up button listeners
         binding.buttonStartPause.setOnClickListener {
             when (viewModel.timerData.value.timerState) {
                 TimerState.Stopped, TimerState.Paused -> viewModel.startTimer()
@@ -102,12 +88,10 @@ class TimerFragment : Fragment() {
     private fun setupTabLayout() {
         val tabLayout = binding.tabLayoutTimer
 
-        // Add tabs to the TabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Pomodoro"))
         tabLayout.addTab(tabLayout.newTab().setText("Short Break"))
         tabLayout.addTab(tabLayout.newTab().setText("Long Break"))
 
-        // Set tab selection listener
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
@@ -122,7 +106,6 @@ class TimerFragment : Fragment() {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-                // Optionally handle reselection
             }
         })
     }
@@ -166,7 +149,6 @@ class TimerFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        // Stop any ongoing animations when the fragment is paused
         AnimationUtils.stopAnimation(binding.imgTomato)
     }
     override fun onResume() {

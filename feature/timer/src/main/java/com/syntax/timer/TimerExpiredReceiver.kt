@@ -41,14 +41,12 @@ class TimerExpiredReceiver : BroadcastReceiver() {
             .setCategory(NotificationCompat.CATEGORY_ALARM)
 
         with(NotificationManagerCompat.from(context)) {
-            // Check for POST_NOTIFICATIONS permission if targeting Android 13+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
                 ContextCompat.checkSelfPermission(
                     context,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // Permission not granted; cannot show notification
                 return
             }
             notify(NOTIFICATION_ID, notificationBuilder.build())

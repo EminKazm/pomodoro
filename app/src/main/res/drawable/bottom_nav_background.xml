@@ -1,0 +1,18 @@
+<!-- res/drawable/bottom_nav_rounded_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Transparent Outside -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" /> <!-- Transparent outside -->
+        </shape>
+    </item>
+
+    <!-- Rounded White Background -->
+    <item android:top="8dp" android:left="8dp" android:right="8dp" android:bottom="8dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#4CAF50" /> <!-- White background for the menu -->
+            <corners android:radius="32dp" /> <!-- Adjust the radius for roundness -->
+        </shape>
+    </item>
+</layer-list>

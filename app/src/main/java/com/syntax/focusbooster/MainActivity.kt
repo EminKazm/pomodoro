@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                     android.Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // Optionally, explain to the user why the permission is needed
                 if (ActivityCompat.shouldShowRequestPermissionRationale(
                         this,
                         android.Manifest.permission.POST_NOTIFICATIONS
@@ -53,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     showPermissionExplanationDialog()
                 } else {
-                    // No explanation needed; request the permission
                     ActivityCompat.requestPermissions(
                         this,
                         arrayOf(android.Manifest.permission.POST_NOTIFICATIONS
@@ -62,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
             } else {
-                // Permission already granted; proceed with notifications
             }
         }
     }
@@ -72,7 +69,6 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Notification Permission Needed")
             .setMessage("This app needs the notification permission to alert you when the timer ends.")
             .setPositiveButton("OK") { _, _ ->
-                // Request the permission after explanation
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(android.Manifest.permission.POST_NOTIFICATIONS
@@ -93,14 +89,12 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_POST_NOTIFICATIONS) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // Permission was granted; proceed with notifications
                 Toast.makeText(
                     this,
                     "Notification permission granted.",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                // Permission denied; inform the user
                 Toast.makeText(
                     this,
                     "Notification permission denied. You won't receive timer alerts.",

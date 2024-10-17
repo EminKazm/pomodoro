@@ -28,7 +28,6 @@ class MyApplication: Application(){
                     lightColor = Color.RED
                     enableVibration(true)
                 }
-                // Register the channel with the system
                 val notificationManager: NotificationManager =
                     getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.createNotificationChannel(channel)
