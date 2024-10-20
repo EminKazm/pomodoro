@@ -22,7 +22,6 @@ class StatsViewModel @Inject constructor(private val getStatsUseCase: GetAllSess
     init {
         viewModelScope.launch {
             getStatsUseCase().collect { sessionList ->
-                Log.d("StatsViewModel", "Collected sessions: $sessionList")
                 _sessions.emit(sessionList) // Emit the new list of sessions
             }
         }

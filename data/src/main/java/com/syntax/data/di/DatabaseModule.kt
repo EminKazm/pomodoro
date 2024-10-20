@@ -19,7 +19,6 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
-        Log.d("DatabaseModule", "Creating database instance")
 
         return Room.databaseBuilder(
             appContext,

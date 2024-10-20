@@ -267,9 +267,7 @@ fun startTimer() {
             viewModelScope.launch {
                 try {
                     insertSessionUseCase(session)
-                    Log.d("TimerViewModel", "Session saved: $session")
                 } catch (e: Exception) {
-                    Log.e("TimerViewModel", "Error saving session", e)
                 }
             }
         }

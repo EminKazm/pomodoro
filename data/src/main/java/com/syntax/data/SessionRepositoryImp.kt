@@ -16,9 +16,7 @@ class SessionRepositoryImpl @Inject constructor(
     override suspend fun insertSession(session: Session) {
         try {
             sessionDao.insertSession(session)
-            Log.d("SessionRepositoryImpl", "Session inserted successfully")
         } catch (e: Exception) {
-            Log.e("SessionRepositoryImpl", "Error inserting session", e)
         }
     }
 
