@@ -20,9 +20,9 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SettingsViewModel by viewModels()
-    private val minPomodoro = 1
-    private val minShortBreak = 1
-    private val minLongBreak = 1
+    private val minPomodoro = 0
+    private val minShortBreak = 0
+    private val minLongBreak = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,11 +76,9 @@ class SettingsFragment : Fragment() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                // Do nothing
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                // Do nothing
             }
         })
         binding.seekBarShortBreak.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -90,7 +88,6 @@ class SettingsFragment : Fragment() {
                 viewModel.setShortBreakDuration(actualProgress.toLong())
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                // Do nothing
             }
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
@@ -101,7 +98,6 @@ class SettingsFragment : Fragment() {
                 viewModel.setLongBreakDuration(actualProgress.toLong())
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                // Do nothing
             }
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
