@@ -4,5 +4,10 @@
         <item name="background">@android:color/transparent</item>
         <item name="titleTextColor">@android:color/white</item> <!-- Adjust text color as needed -->
         <item name="subtitleTextColor">@android:color/white</item> <!-- Adjust subtitle color as needed -->
+
+    </style>
+    <style name="CustomBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemBackground">@drawable/custom_ripple</item> <!-- Apply the custom ripple -->
+        <item name="itemRippleColor">@android:color/transparent</item> <!-- Ensure the ripple effect is transparent -->
     </style>
 </resources>

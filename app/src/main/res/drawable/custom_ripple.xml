@@ -1,0 +1,18 @@
+<!-- res/drawable/custom_ripple.xml -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@android:color/transparent"> <!-- Set ripple color to transparent to disable the effect -->
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <!-- Transparent background for selected state to avoid the oval shape -->
+            <solid android:color="@android:color/transparent" />
+            <!-- Optionally, add an underline by adding a size and a solid color below -->
+            <stroke android:width="2dp" android:color="@color/colorPrimary" />
+        </shape>
+    </item>
+    <!-- Default (unselected) state -->
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</ripple>
